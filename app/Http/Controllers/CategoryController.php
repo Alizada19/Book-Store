@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
 
 class CategoryController extends Controller
@@ -12,7 +13,28 @@ class CategoryController extends Controller
      */
     public function index()
     {  
-        $categories = Category::paginate(10);  // fetch users
+        $query = Category::orderBy('id', 'DESC');
+                    
+        // 2️⃣ Logged-in users
+        if (Auth::check())
+        {
+
+            if (Auth::user()->can('View All')) {
+                // Admin → see all books (no filter)
+
+            } elseif (Auth::user()->can('View Record')) {
+                // Seller → see only his own books
+                $query->where('userId', Auth::id());
+            }
+
+        } 
+        // 3️⃣ Guests (optional)
+        else 
+        {
+            // Example:
+            
+        }
+        $categories = $query->paginate(10);  // fetch users
         return view('frontend.categories.index', compact('categories'));
     }
 
@@ -40,8 +62,9 @@ class CategoryController extends Controller
             'description' => $request->description,
             'created_at' => now(),
             'updated_at' => now(),
+            'userId' => auth()->id(),
         ]); 
-
+       
         return redirect()
             ->route('categories.index')
             ->with('success', 'Category added successfully');

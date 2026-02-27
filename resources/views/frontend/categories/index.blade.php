@@ -8,9 +8,11 @@
 
         <div class="card-header d-flex justify-content-between align-items-center">
             <h3 class="card-title">Category List</h3>
+            @role('Admin')
             <a href="{{ route('categories.create') }}" class="btn btn-primary">
                 <i class="bi bi-plus-circle"></i> Add Category
             </a>
+            @endrole
         </div>
 
         @if (session('success'))
@@ -38,12 +40,12 @@
                         <td>{{ $row->description }}</td>
 
                         <td>
-
+                            @role('Admin')
                             <a href="{{ route('books.show', $row->id) }}" 
                                 class="btn btn-sm btn-info">
                                 <i class="bi bi-eye"></i>
                             </a>
-
+                            
                             <a href="{{ route('books.edit', $row->id) }}" 
                                 class="btn btn-sm btn-warning">
                                 <i class="bi bi-pencil-square"></i>
@@ -62,6 +64,7 @@
                                 </button>
 
                             </form>
+                            @endrole
                         </td>
                     </tr>
                 @endforeach

@@ -10,7 +10,7 @@ class ProfileController extends Controller
 {
     // Show profile
     public function show()
-    {
+    { 
         $user = Auth::user();
         return view('profile.show', compact('user'));
     }

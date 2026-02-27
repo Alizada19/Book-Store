@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
+
 
 class BookController extends Controller
 {
@@ -13,7 +15,34 @@ class BookController extends Controller
      */
     public function index()
     {
-        $result = Book::with(['seller', 'category'])->orderBy('id', 'DESC')->paginate(10);
+
+        // 1️⃣ Build query FIRST
+        $query = Book::with(['seller', 'category'])
+            ->orderBy('id', 'DESC');
+
+        // 2️⃣ Logged-in users
+        if (Auth::check())
+        {
+
+            if (Auth::user()->can('View All')) {
+                // Admin → see all books (no filter)
+
+            } elseif (Auth::user()->can('View Record')) {
+                // Seller → see only his own books
+                $query->where('seller_id', Auth::id());
+            }
+
+        } 
+        // 3️⃣ Guests (optional)
+        else 
+        {
+            // Example:
+            // $query->where('status', 'published');
+        }
+
+        // 4️⃣ Execute query ONE TIME
+        $result = $query->paginate(10);
+
         return view('frontend.books.index', compact('result'));
     }
 

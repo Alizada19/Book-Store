@@ -15,16 +15,7 @@
 
             <div class="row">
 
-                {{-- Cover Image --}}
-                <div class="col-md-4">
-                    @if($book->hasMedia('covers'))
-                        <img src="{{ asset($book->getFirstMediaUrl('covers')) }}"
-                             class="img-fluid img-thumbnail"
-                             alt="Book Cover">
-                    @else
-                        <div class="text-muted">No Cover Image</div>
-                    @endif
-                </div>
+              
 
                 {{-- Book Info --}}
                 <div class="col-md-8">
@@ -62,14 +53,14 @@
             </div>
 
         </div>
-        @auth
+        @can('Edit Record')
         <div class="card-footer text-end">
             <a href="{{ route('books.edit', $book->id) }}"
                class="btn btn-warning">
                 <i class="bi bi-pencil-square"></i> Edit
             </a>
         </div>
-        @endauth
+        @endcan
     </div>
 </div>
 @endsection

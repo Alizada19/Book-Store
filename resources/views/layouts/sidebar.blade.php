@@ -39,10 +39,18 @@
                   </p>
                 </a>
                 <ul class="nav nav-treeview">
+                  @role('Admin')
                   <li class="nav-item">
                     <a href="{{ route('users.index') }}" class="nav-link">
                         <i class="nav-icon bi bi-people"></i>
                         <p>User Management
+                        </p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ route('admin.users.index') }}" class="nav-link">
+                        <i class="nav-icon bi bi-person-gear"></i>
+                        <p>Assign Roles to user
                         </p>
                     </a>
                   </li>
@@ -58,10 +66,18 @@
                         <p>Permissions Management</p>
                     </a>
                   </li>
+                  @endrole
+                  @auth
                   <li class="nav-item">
                     <a href="{{ route('books.index') }}" class="nav-link">
                       <i class="nav-icon bi bi-book"></i>
                       <p>Book Management</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ route('orders.index') }}" class="nav-link">
+                      <i class="nav-icon bi-cart-check"></i>
+                      <p>Orders</p>
                     </a>
                   </li>
                   <li class="nav-item">
@@ -71,11 +87,12 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="{{ route('users.index') }}" class="nav-link">
+                    <a href="{{ route('profile.show') }}" class="nav-link">
                         <i class="nav-icon bi bi-person-circle"></i>
                         <p>Profile</p>
                     </a>
                   </li>
+                  @endauth
                 </ul>
               </li>
             

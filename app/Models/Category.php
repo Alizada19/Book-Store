@@ -10,7 +10,7 @@ use App\Models\Book;
 class Category extends Model
 {
     use HasSlug;
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['name', 'description', 'userId'];
 
     public function books()  // note: lowercase plural 'books'
     {

@@ -30,6 +30,16 @@ class UserController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource as simple user.
+     */
+    public function createSimpleUser()
+    {     
+        $roles = Role::whereIn('id', [2, 5])->get();
+        return view('users.simpleuser', compact('roles'));
+    }
+
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)

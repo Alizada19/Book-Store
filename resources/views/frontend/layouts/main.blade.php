@@ -61,38 +61,47 @@
 					<div class="product-list" data-aos="fade-up">
 						<div class="row">
 						@foreach ($categories as $category)
- 							<div class="section-header align-center">
-								<h2 class="section-title">{{ $category->name }}</h2>
-							</div>
-							@foreach($category->books as $book)
-							<div class="col-md-3">
-								<div class="product-item">
-									<figure class="product-style">
-										 @if($book->hasMedia('covers'))
-										<img src="{{ asset($book->getFirstMediaUrl('covers')) }}" alt="Books" class="product-item">
-										@else
-											<div class="text-muted">No Cover Image</div>
-										@endif
-										<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-											Cart</button>
-									</figure>
-									<figcaption>
-										<h3>{{$book->title}}</h3>
-										<div class="item-price">RM {{$book->price}}</div>
-									</figcaption>
+						   @if($category->books->isNotEmpty())
+								<div class="section-header align-center">
+									<h2 class="section-title">{{ $category->name }}</h2>
 								</div>
-							</div>
-							@endforeach
-							<div class="row">
-								<div class="col-md-12">
-
-									<div class="btn-wrap align-right">
-										<a href="#" class="btn-accent-arrow">View all products <i
-												class="icon icon-ns-arrow-right"></i></a>
+								@foreach($category->books as $book)
+								<div class="col-md-3">
+									<div class="product-item">
+										<figure class="product-style">
+											@if($book->hasMedia('covers'))
+											<a href="{{ route('books.show', $book) }}">
+												<img src="{{ asset($book->getFirstMediaUrl('covers')) }}" alt="Books" class="product-item">
+											</a>
+											@else
+												<div class="text-muted">No Cover Image</div>
+											@endif
+											<form action="{{ route('orders.store') }}" method="POST">
+												@csrf
+												<input type="hidden" name="book_id" value="{{ $book->id }}">
+												<input type="hidden" name="quantity" value="1">
+												<button class="add-to-cart" data-product-tile="add-to-cart">Add to
+													Cart</button>
+											</form>
+										</figure>
+										<figcaption>
+											<h3>{{$book->title}}</h3>
+											<div class="item-price">RM {{$book->price}}</div>
+										</figcaption>
 									</div>
-
 								</div>
-							</div>
+								@endforeach
+								<div class="row">
+									<div class="col-md-12">
+
+										<div class="btn-wrap align-right">
+											<a href="#" class="btn-accent-arrow">View all products <i
+													class="icon icon-ns-arrow-right"></i></a>
+										</div>
+
+									</div>
+								</div>
+							@endif
 						@endforeach
 
 						</div><!--ft-books-slider-->

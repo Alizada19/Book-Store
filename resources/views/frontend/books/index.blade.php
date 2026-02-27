@@ -8,9 +8,11 @@
 
         <div class="card-header d-flex justify-content-between align-items-center">
             <h3 class="card-title">Book List</h3>
+            @can('Add Record')
             <a href="{{ route('books.create') }}" class="btn btn-primary">
                 <i class="bi bi-plus-circle"></i> Add Book
             </a>
+            @endcan
         </div>
 
         @if (session('success'))
@@ -44,17 +46,19 @@
                         <td>{{ $row->category->name }}</td>
 
                         <td>
-
+                        @can('View Record')
                             <a href="{{ route('books.show', $row) }}" 
                                 class="btn btn-sm btn-info">
                                 <i class="bi bi-eye"></i>
                             </a>
-
+                        @endcan
+                        @can('Edit Record')
                             <a href="{{ route('books.edit', $row->id) }}" 
                                 class="btn btn-sm btn-warning">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
-
+                        @endcan
+                        @can('Delete Record')
                             <form action="{{ route('books.destroy', $row->id) }}"
                                     method="POST"
                                     class="d-inline">
@@ -68,6 +72,7 @@
                                 </button>
 
                             </form>
+                        @endcan    
                         </td>
                     </tr>
                 @endforeach

@@ -20,10 +20,9 @@
 					</div>
 					<div class="col-md-6">
 						<div class="right-element">
-							<a href="#" class="user-account for-buy"><i
+							<a href="{{ route('books.index') }}" class="user-account for-buy"><i
 									class="icon icon-user"></i><span>Account</span></a>
-							<a href="#" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Cart:(0
-									RM )</span></a>
+							
 
 							<div class="action-menu">
 
